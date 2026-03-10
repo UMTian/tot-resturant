@@ -17,37 +17,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
-  
+
   if (cursor && ring) {
-    document.addEventListener('mousemove', e => { 
-      mx = e.clientX; 
-      my = e.clientY; 
-      cursor.style.left = mx + 'px'; 
-      cursor.style.top = my + 'px'; 
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX;
+      my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
     });
-    
-    (function animRing() { 
-      rx += (mx - rx) * 0.13; 
-      ry += (my - ry) * 0.13; 
-      ring.style.left = rx + 'px'; 
-      ring.style.top = ry + 'px'; 
-      requestAnimationFrame(animRing); 
+
+    (function animRing() {
+      rx += (mx - rx) * 0.13;
+      ry += (my - ry) * 0.13;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
     })();
-    
+
     document.querySelectorAll('a,button,.menu-card,.filter-btn,.back-home,.qty-btn,.remove-item').forEach(el => {
-      el.addEventListener('mouseenter', () => { 
-        cursor.style.width = '20px'; 
-        cursor.style.height = '20px'; 
-        ring.style.width = '56px'; 
-        ring.style.height = '56px'; 
-        ring.style.borderColor = 'rgba(245,196,0,0.7)'; 
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+        ring.style.width = '56px';
+        ring.style.height = '56px';
+        ring.style.borderColor = 'rgba(245,196,0,0.7)';
       });
-      el.addEventListener('mouseleave', () => { 
-        cursor.style.width = '13px'; 
-        cursor.style.height = '13px'; 
-        ring.style.width = '38px'; 
-        ring.style.height = '38px'; 
-        ring.style.borderColor = 'rgba(90,171,255,0.6)'; 
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '13px';
+        cursor.style.height = '13px';
+        ring.style.width = '38px';
+        ring.style.height = '38px';
+        ring.style.borderColor = 'rgba(90,171,255,0.6)';
       });
     });
   }
@@ -72,32 +72,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const cObs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      const el = entry.target; 
+      const el = entry.target;
       const target = parseInt(el.dataset.count);
       const suffix = target === 1 ? 'M+' : target === 100 ? '%' : target === 5 ? '★' : '+';
-      let cur = 0; 
+      let cur = 0;
       const inc = target / 55;
-      const t = setInterval(() => { 
-        cur += inc; 
-        if (cur >= target) { cur = target; clearInterval(t); } 
-        el.textContent = Math.floor(cur) + suffix; 
+      const t = setInterval(() => {
+        cur += inc;
+        if (cur >= target) { cur = target; clearInterval(t); }
+        el.textContent = Math.floor(cur) + suffix;
       }, 18);
       cObs.unobserve(el);
     });
   }, { threshold: 0.5 });
   document.querySelectorAll('[data-count]').forEach(c => cObs.observe(c));
-
-  // MENU FILTER (Preview Menu)
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const f = btn.dataset.filter;
-      document.querySelectorAll('#menuGrid .menu-card').forEach(card => {
-        card.classList.toggle('hidden', f !== 'all' && card.dataset.category !== f);
-      });
-    });
-  });
 
   // CARD 3D TILT
   document.querySelectorAll('.menu-card').forEach(card => {
@@ -110,23 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
     card.addEventListener('mouseleave', () => card.style.transform = '');
   });
 
-  // ADD BUTTON (Preview Menu)
-  document.querySelectorAll('#menuGrid .menu-card-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-      const o = this.textContent;
-      this.textContent = '✓ Added!';
-      this.style.background = 'var(--yellow)';
-      this.style.color = 'var(--text)';
-      setTimeout(() => {
-        this.textContent = o;
-        this.style.background = '';
-        this.style.color = '';
-      }, 1500);
-    });
-  });
-
   // PAGE SWITCHER
-  const navMenuLinks = document.querySelectorAll('a[href="tot-menu/menu.html"], .menu-cta-btn');
+  const navMenuLinks = document.querySelectorAll('.menu-link, .menu-cta-btn');
   const backHomeBtn = document.querySelector('.back-home');
   const landingView = document.getElementById('landing-page');
   const menuView = document.getElementById('menu-page');
@@ -146,11 +119,78 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0);
   };
 
+  // LANDING CARD DIRECT TO MENU
+  document.querySelectorAll('.clickable-card').forEach(card => {
+    card.addEventListener('click', () => {
+      showMenu();
+    });
+  });
+
   navMenuLinks.forEach(link => link.addEventListener('click', showMenu));
   if (backHomeBtn) backHomeBtn.addEventListener('click', showLanding);
 });
 
 // ── MENU PAGE LOGIC ─────────────────────────────
+
+// Burger Selection State
+let pendingBurger = null;
+
+const variantModal = document.getElementById('variantModal');
+const singleBtn = document.getElementById('singleBtn');
+const doubleBtn = document.getElementById('doubleBtn');
+const singlePriceText = document.getElementById('singlePriceText');
+const doublePriceText = document.getElementById('doublePriceText');
+
+function closeVariantModal() {
+  if (variantModal) variantModal.classList.remove('active');
+  pendingBurger = null;
+}
+
+if (singleBtn) {
+  singleBtn.onclick = () => {
+    if (pendingBurger) {
+      const variantId = pendingBurger.id + '-single';
+      const existingItem = cart.find(item => item.id === variantId);
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({
+          id: variantId,
+          name: pendingBurger.name + ' (Single)',
+          price: pendingBurger.price,
+          icon: pendingBurger.icon,
+          quantity: 1
+        });
+      }
+      updateCart();
+      showToast('✅ Added Single to cart!');
+      closeVariantModal();
+    }
+  };
+}
+
+if (doubleBtn) {
+  doubleBtn.onclick = () => {
+    if (pendingBurger) {
+      const variantId = pendingBurger.id + '-double';
+      const existingItem = cart.find(item => item.id === variantId);
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({
+          id: variantId,
+          name: pendingBurger.name + ' (Double)',
+          price: pendingBurger.doublePrice,
+          icon: pendingBurger.icon,
+          quantity: 1
+        });
+      }
+      updateCart();
+      showToast('✅ Added Double to cart!');
+      closeVariantModal();
+    }
+  };
+}
 
 // Menu Data
 const menuData = {
@@ -243,7 +283,7 @@ let cart = [];
 function initMenu() {
   const containerCheck = document.getElementById('appetizers');
   if (!containerCheck) return;
-  
+
   renderSection('appetizers', menuData.appetizers);
   renderSection('burgers', menuData.burgers);
   renderSection('sandos', menuData.sandos);
@@ -282,6 +322,22 @@ function renderSection(sectionId, items) {
 
 // Add to Cart
 function addToCart(id, name, price, icon) {
+  // Find item in menuData to check for doublePrice
+  let found = null;
+  for (const cat in menuData) {
+    found = menuData[cat].find(i => i.id === id);
+    if (found) break;
+  }
+
+  if (found && found.doublePrice) {
+    pendingBurger = found;
+    document.getElementById('variantTitle').textContent = `Choose for ${name}`;
+    singlePriceText.textContent = `Rs. ${found.price}/-`;
+    doublePriceText.textContent = `Rs. ${found.doublePrice}/-`;
+    variantModal.classList.add('active');
+    return;
+  }
+
   const existingItem = cart.find(item => item.id === id);
 
   if (existingItem) {
