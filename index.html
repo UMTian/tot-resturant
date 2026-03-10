@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOT — by RHS</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=Bangers&family=Montserrat:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- LANDING PAGE VIEW -->
+  <div id="landing-page">
+    <!-- NAVBAR -->
+    <nav>
+      <a href="#hero" class="nav-logo">T<span>O</span>T</a>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="tot-menu/menu.html" class="menu-link">Menu</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="tot-menu/menu.html" class="nav-cta menu-link">Order Now</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="hero-tag">✦ by RHS — Lahore</div>
+          <h1 class="hero-title">
+            THE<br>
+            <span class="yellow">TASTE</span><br>
+            <span class="blue">OF TIME</span>
+          </h1>
+          <p class="hero-sub">Premium burgers, crispy chicken sandos & loaded fries — crafted with bold flavors and zero
+            compromises. Model Town, Lahore.</p>
+          <div class="hero-btns">
+            <a href="tot-menu/menu.html" class="btn-primary menu-link">Explore Menu</a>
+            <a href="#contact" class="btn-outline">Find Us →</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <span class="float-item">🍟</span>
+          <span class="float-item">🥤</span>
+          <span class="float-item">🍗</span>
+          <span class="float-item">🍫</span>
+          <div class="hero-plate">🍔</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE 1 -->
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="mq1"></div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div class="stat-item reveal">
+        <div class="stat-num" data-count="1">0</div>
+        <div class="stat-label">Million+ Followers</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-count="25">0</div>
+        <div class="stat-label">Menu Items</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-count="100">0</div>
+        <div class="stat-label">% Fresh Daily</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-num" data-count="5">0</div>
+        <div class="stat-label">Star Rated</div>
+      </div>
+    </div>
+
+    <!-- MENU PREVIEW -->
+    <section id="menu">
+      <div class="section-label reveal">✦ What We Serve</div>
+      <h2 class="landing-section-title reveal">OUR <span>MENU</span></h2>
+
+      <div class="menu-filters reveal">
+        <button class="filter-btn active" data-filter="all">All Items</button>
+        <button class="filter-btn" data-filter="burgers">Burgers</button>
+        <button class="filter-btn" data-filter="chicken">Chicken</button>
+        <button class="filter-btn" data-filter="sides">Sides</button>
+        <button class="filter-btn" data-filter="drinks">Drinks</button>
+        <button class="filter-btn" data-filter="desserts">Desserts</button>
+        <button class="filter-btn" data-filter="sauces">Sauces</button>
+      </div>
+
+      <div class="menu-grid" id="menuGrid">
+
+        <div class="menu-card reveal" data-category="burgers">
+          <span class="badge hot">🔥 Hot</span>
+          <span class="menu-card-emoji">🍔</span>
+          <div class="menu-card-category">Burgers</div>
+          <div class="menu-card-name">TOT Signature Smash</div>
+          <div class="menu-card-desc">Double smashed beef patty, special TOT sauce, caramelized onions, aged cheddar on
+            a
+            brioche bun.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Rs 990</div>
+            <button class="menu-card-btn">Add +</button>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="burgers">
+          <span class="badge new">New</span>
+          <span class="menu-card-emoji">🥪</span>
+          <div class="menu-card-category">Burgers</div>
+          <div class="menu-card-name">Blue Cheese Beast</div>
+          <div class="menu-card-desc">Wagyu-style beef, blue cheese crumble, truffle aioli, crispy jalapeños, brioche
+            bun.
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Rs 1,290</div>
+            <button class="menu-card-btn">Add +</button>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="chicken">
+          <span class="badge hot">🔥 Hot</span>
+          <span class="menu-card-emoji">🍗</span>
+          <div class="menu-card-category">Chicken</div>
+          <div class="menu-card-name">Crispy Chicken Sando</div>
+          <div class="menu-card-desc">Double-fried golden chicken thigh, house pickles, comeback sauce, shredded slaw.
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Rs 890</div>
+            <button class="menu-card-btn">Add +</button>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="sides">
+          <span class="badge hot">🔥 Hot</span>
+          <span class="menu-card-emoji">🍟</span>
+          <div class="menu-card-category">Sides</div>
+          <div class="menu-card-name">TOT Loaded Fries</div>
+          <div class="menu-card-desc">Crispy waffle fries loaded with cheese sauce, jalapeños, crispy beef bits &amp;
+            chives.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Rs 650</div>
+            <button class="menu-card-btn">Add +</button>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="desserts">
+          <span class="menu-card-emoji">🍮</span>
+          <div class="menu-card-category">Desserts</div>
+          <div class="menu-card-name">Lotus Biscoff Shake</div>
+          <div class="menu-card-desc">Thick shake with Biscoff spread, vanilla ice cream, whipped cream, crumbled
+            cookies.
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Rs 590</div>
+            <button class="menu-card-btn">Add +</button>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="drinks">
+          <span class="badge new">New</span>
+          <span class="menu-card-emoji">🧋</span>
+          <div class="menu-card-category">Soft Drinks</div>
+          <div class="menu-card-name">TOT Blue Lemonade</div>
+          <div class="menu-card-desc">House-made lemonade with butterfly pea flower, mint, and a rim of salted tajin.
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Rs 390</div>
+            <button class="menu-card-btn">Add +</button>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="drinks">
+          <span class="menu-card-emoji">🥤</span>
+          <div class="menu-card-category">Drinks</div>
+          <div class="menu-card-name">Mango Mint Smash</div>
+          <div class="menu-card-desc">Fresh mango pulp, mint leaves, chaat masala, sparkling water. Summer in a glass.
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Rs 350</div>
+            <button class="menu-card-btn">Add +</button>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="desserts">
+          <span class="badge new">New</span>
+          <span class="menu-card-emoji">🍹</span>
+          <div class="menu-card-category">Desserts</div>
+          <div class="menu-card-name">TOT Signature Cooler</div>
+          <div class="menu-card-desc">RHS's house special — a chilled blend of tropical fruits, mint, soda &amp; a
+            secret
+            syrup that keeps everyone coming back.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Rs 490</div>
+            <button class="menu-card-btn">Add +</button>
+          </div>
+        </div>
+
+        <div class="menu-card reveal" data-category="sauces">
+          <span class="badge hot">🔥 Fan Fav</span>
+          <span class="menu-card-emoji">🌶️</span>
+          <div class="menu-card-category">Sauces</div>
+          <div class="menu-card-name">TOT Secret Sauce</div>
+          <div class="menu-card-desc">RHS's legendary in-house sauce — smoky, tangy &amp; slightly spicy. The secret
+            behind every TOT burger's unforgettable bite.</div>
+          <div class="menu-card-footer">
+            <div class="menu-card-price">Rs 120</div>
+            <button class="menu-card-btn">Add +</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Full Menu CTA -->
+      <div class="menu-cta-wrap reveal">
+        <p class="menu-cta-sub">Burgers • Sandos • Wings • Fries • Shakes • Desserts • Dips &amp; More</p>
+        <a href="tot-menu/menu.html" class="btn-primary menu-cta-btn">🍔 View Full Menu &amp; Order Now</a>
+      </div>
+    </section>
+
+    <!-- MARQUEE 2 -->
+    <div class="marquee-wrap blue-m">
+      <div class="marquee-track" id="mq2"></div>
+    </div>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-label reveal">✦ Come See Us</div>
+      <h2 class="landing-section-title reveal">FIND <span>TOT</span></h2>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="info-card reveal">
+            <div class="info-icon">📍</div>
+            <div class="info-text">
+              <h4>Location</h4>
+              <p>C Block Market, Model Town<br>Lahore, Punjab, Pakistan</p>
+            </div>
+          </div>
+          <div class="info-card reveal">
+            <div class="info-icon">🕐</div>
+            <div class="info-text">
+              <h4>Opening Hours</h4>
+              <table class="hours-table">
+                <tr>
+                  <td>Mon – Thu</td>
+                  <td>12:00 PM – 12:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Friday</td>
+                  <td>12:00 PM – 1:00 AM</td>
+                </tr>
+                <tr class="today">
+                  <td>Saturday ★</td>
+                  <td>11:00 AM – 1:00 AM</td>
+                </tr>
+                <tr>
+                  <td>Sunday</td>
+                  <td>11:00 AM – 12:00 AM</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="info-card reveal">
+            <div class="info-icon">💬</div>
+            <div class="info-text">
+              <h4>WhatsApp Us</h4>
+              <p><a href="https://wa.me/923338010986" target="_blank" style="color: inherit; text-decoration: none;">+92
+                  333 8010986</a><br>Fastest way to order & support</p>
+            </div>
+          </div>
+          <div class="info-card reveal">
+            <div class="info-icon">📱</div>
+            <div class="info-text">
+              <h4>Follow RHS</h4>
+              <p>@rhsfooddiaries on Instagram<br>@totpakistan for daily updates</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-container reveal">
+          <div class="map-placeholder">
+            <div class="map-pin-anim">📍</div>
+            <h3>TOT — Model Town, Lahore</h3>
+            <p>C Block Market, Model Town<br>Lahore, Punjab, Pakistan</p>
+            <a href="https://www.google.com/maps/search/TOT+restaurant+Model+Town+Lahore" target="_blank"
+              class="map-link">
+              🗺️ Open in Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">T<span>O</span>T</div>
+      <p class="footer-copy">© 2025 TOT by RHS. All rights reserved. Lahore, Pakistan.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/ranahamzasaif.1" target="_blank" class="social-link" title="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+          </svg>
+        </a>
+        <a href="https://instagram.com/totpakistan" target="_blank" class="social-link" title="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+          </svg>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- MENU PAGE VIEW -->
+  <div id="menu-page" style="display: none;">
+    <!-- Header -->
+    <header class="menu-header">
+      <div class="header-content">
+        <div class="back-home">&#8592; Home</div>
+        <div class="logo">
+          <div class="logo-mascot">&#128526;</div>
+          <span class="logo-text">TOT MENU</span>
+        </div>
+        <button class="cart-btn" onclick="toggleCart()">
+          <span>My Cart</span>
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="menu-container">
+      <section class="comic-section">
+        <h2 class="menu-section-title">⚡ APPETIZERS ⚡</h2>
+        <div class="menu-page-grid" id="appetizers"></div>
+      </section>
+
+      <section class="comic-section">
+        <h2 class="menu-section-title">🍔 OG BURGERS 🍔</h2>
+        <div class="menu-page-grid" id="burgers"></div>
+      </section>
+
+      <section class="comic-section">
+        <h2 class="menu-section-title">🥪 SHAPACK SANDOS 🥪</h2>
+        <div class="menu-page-grid" id="sandos"></div>
+      </section>
+
+      <section class="comic-section">
+        <h2 class="menu-section-title">🍟 FRIES 🍟</h2>
+        <div class="menu-page-grid" id="fries"></div>
+      </section>
+
+      <section class="comic-section">
+        <h2 class="menu-section-title">🍱 MAKE IT A MEAL 🍱</h2>
+        <div class="menu-page-grid" id="meals"></div>
+      </section>
+
+      <section class="comic-section">
+        <h2 class="menu-section-title">🥤 SIGNATURE SIPS 🥤</h2>
+        <div class="menu-page-grid" id="sips"></div>
+      </section>
+
+      <section class="comic-section">
+        <h2 class="menu-section-title">🥤 SPECIAL SHAKES 🥤</h2>
+        <div class="menu-page-grid" id="shakes"></div>
+      </section>
+
+      <section class="comic-section">
+        <h2 class="menu-section-title">🍰 DESSERT 🍰</h2>
+        <div class="menu-page-grid" id="dessert"></div>
+      </section>
+
+      <section class="comic-section">
+        <h2 class="menu-section-title">✨ ADD-ONS ✨</h2>
+        <div class="menu-page-grid" id="addons"></div>
+      </section>
+
+      <section class="comic-section">
+        <h2 class="menu-section-title">🥣 DIPS 🥣</h2>
+        <div class="menu-page-grid" id="dips"></div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="menu-footer">
+      <div class="menu-footer-logo">TOT</div>
+      <p class="menu-footer-text">Sip the Drip • Share the Sweetness</p>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <div class="cart-title">
+          🛒 Your Cart
+        </div>
+        <button class="close-cart" onclick="toggleCart()">✕</button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <div class="empty-cart">
+          <div class="empty-cart-icon">🛒</div>
+          <p class="empty-cart-text">Your cart is empty!<br>Add some delicious items!</p>
+        </div>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span class="total-label">TOTAL:</span>
+          <span class="total-amount" id="totalAmount">Rs. 0</span>
+        </div>
+        <button class="order-btn" onclick="orderViaWhatsApp()">
+          📱 Order on WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    ✅ Added to cart!
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
