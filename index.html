@@ -64,8 +64,8 @@
     <!-- STATS -->
     <div class="stats-bar">
       <div class="stat-item reveal">
-        <div class="stat-num" data-count="1">0</div>
-        <div class="stat-label">Million+ Followers</div>
+        <div class="stat-num" data-count="72K">0</div>
+        <div class="stat-label">Followers</div>
       </div>
       <div class="stat-item reveal">
         <div class="stat-num" data-count="25">0</div>
@@ -102,7 +102,7 @@
         </div>
 
         <div class="menu-card reveal clickable-card" data-category="burgers">
-          <span class="badge new">New</span>
+          <span class="badge hot">🔥 Hot</span>
           <span class="menu-card-emoji">🥪</span>
           <div class="menu-card-category">Shapack Sandos</div>
           <div class="menu-card-name">TOT Sandos</div>
@@ -116,7 +116,6 @@
         </div>
 
         <div class="menu-card reveal clickable-card" data-category="chicken">
-          <span class="badge hot">🔥 Hot</span>
           <span class="menu-card-emoji">🍗</span>
           <div class="menu-card-category">Appetizers</div>
           <div class="menu-card-name">Crispy Chicken wings</div>
@@ -154,7 +153,6 @@
         </div>
 
         <div class="menu-card reveal clickable-card" data-category="drinks">
-          <span class="badge new">New</span>
           <span class="menu-card-emoji">🧋</span>
           <div class="menu-card-category">Shakes</div>
           <div class="menu-card-name">TOT Milkshakes</div>
@@ -179,7 +177,6 @@
         </div>
 
         <div class="menu-card reveal clickable-card" data-category="desserts">
-          <span class="badge new">New</span>
           <span class="menu-card-emoji">🍹</span>
           <div class="menu-card-category">Signature Sips</div>
           <div class="menu-card-name">TOT Signature Cooler</div>
@@ -192,7 +189,6 @@
         </div>
 
         <div class="menu-card reveal clickable-card" data-category="sauces">
-          <span class="badge hot">🔥 Fan Fav</span>
           <span class="menu-card-emoji">🌶️</span>
           <div class="menu-card-category">Dips</div>
           <div class="menu-card-name">TOT Secret Sauce</div>
@@ -406,14 +402,48 @@
           <span class="total-label">TOTAL:</span>
           <span class="total-amount" id="totalAmount">Rs. 0</span>
         </div>
-        <button class="order-btn" onclick="orderViaWhatsApp()">
-          📱 Order on WhatsApp
+        <button class="order-btn" onclick="openCheckoutModal()">
+          Checkout & Confirm Order
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Burger Variant Modal -->
+  <!-- Checkout Form Modal -->
+  <div id="checkoutModal" class="variant-modal">
+    <div class="variant-content checkout-content">
+      <h3 id="variantTitle">Finalize Order</h3>
+      <p id="variantDesc">Fill in your details to place the order.</p>
+
+      <form id="orderForm" class="checkout-form" onsubmit="event.preventDefault(); submitOrderForm();">
+        <div class="input-group">
+          <input type="text" id="custName" placeholder="Full Name" required>
+        </div>
+        <div class="input-group">
+          <input type="tel" id="custPhone" placeholder="WhatsApp Number" required>
+        </div>
+        <div class="input-group">
+          <textarea id="custAddress" placeholder="Delivery Address" required></textarea>
+        </div>
+
+        <div class="order-summary-box">
+          <div id="checkoutItemsList"></div>
+          <div class="checkout-total-line">
+            <span>Total:</span>
+            <span id="checkoutTotalAmount">Rs. 0</span>
+          </div>
+        </div>
+
+        <button type="submit" id="confirmOrderBtn" class="order-btn" style="margin-top: 20px;">
+          🚀 Place Order (Confirm)
+        </button>
+      </form>
+
+      <button class="close-variant" onclick="closeCheckoutModal()">✕ Cancel</button>
+    </div>
+  </div>
+
+  <!-- Variant Modal (Existing) -->
   <div id="variantModal" class="variant-modal">
     <div class="variant-content">
       <h3 id="variantTitle">Choose Variant</h3>
