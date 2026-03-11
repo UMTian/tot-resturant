@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(animRing);
     })();
 
-    document.querySelectorAll('a,button,.menu-card,.filter-btn,.back-home,.qty-btn,.remove-item').forEach(el => {
+    document.querySelectorAll('a,button,.menu-card,.filter-btn,.back-home,.qty-btn,.remove-item,.variant-opt-btn,.close-variant').forEach(el => {
       el.addEventListener('mouseenter', () => {
         cursor.style.width = '20px';
         cursor.style.height = '20px';
@@ -73,8 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       const el = entry.target;
-      const target = parseInt(el.dataset.count);
-      const suffix = target === 1 ? 'M+' : target === 100 ? '%' : target === 5 ? '★' : '+';
+      const raw = el.dataset.count;
+      const target = parseInt(raw);
+      const suffix = raw.includes('K') ? 'K' : raw.includes('M') ? 'M+' : target === 100 ? '%' : target === 5 ? '★' : '+';
       let cur = 0;
       const inc = target / 55;
       const t = setInterval(() => {
@@ -128,6 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   navMenuLinks.forEach(link => link.addEventListener('click', showMenu));
   if (backHomeBtn) backHomeBtn.addEventListener('click', showLanding);
+
+  navMenuLinks.forEach(link => link.addEventListener('click', showMenu));
+  if (backHomeBtn) backHomeBtn.addEventListener('click', showLanding);
 });
 
 // ── MENU PAGE LOGIC ─────────────────────────────
@@ -136,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let pendingBurger = null;
 
 const variantModal = document.getElementById('variantModal');
+const checkoutModal = document.getElementById('checkoutModal');
 const singleBtn = document.getElementById('singleBtn');
 const doubleBtn = document.getElementById('doubleBtn');
 const singlePriceText = document.getElementById('singlePriceText');
@@ -144,6 +149,30 @@ const doublePriceText = document.getElementById('doublePriceText');
 function closeVariantModal() {
   if (variantModal) variantModal.classList.remove('active');
   pendingBurger = null;
+}
+
+function openCheckoutModal() {
+  if (cart.length === 0) {
+    showToast('⚠️ Your cart is empty!');
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  document.getElementById('checkoutTotalAmount').textContent = `Rs. ${total}/-`;
+
+  const list = document.getElementById('checkoutItemsList');
+  list.innerHTML = cart.map(item => `
+    <div class="checkout-item-row">
+      <span>${item.name} x${item.quantity}</span>
+      <span>Rs. ${item.price * item.quantity}</span>
+    </div>
+  `).join('');
+
+  checkoutModal.classList.add('active');
+}
+
+function closeCheckoutModal() {
+  if (checkoutModal) checkoutModal.classList.remove('active');
 }
 
 if (singleBtn) {
@@ -442,6 +471,137 @@ function orderViaWhatsApp() {
 
   const encodedMessage = encodeURIComponent(message);
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
   window.open(whatsappUrl, '_blank');
+
+  // Clear cart after order
+  cart = [];
+  updateCart();
+  toggleCart(); // Close sidebar
+  showToast('🛒 Cart cleared after order!');
+}
+
+let isSending = false;
+
+async function submitOrderForm() {
+  if (isSending) return;
+
+  const btn = document.getElementById('confirmOrderBtn');
+  const nameInput = document.getElementById('custName');
+  const phoneInput = document.getElementById('custPhone');
+  const addressInput = document.getElementById('custAddress');
+
+  const name = nameInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const address = addressInput.value.trim();
+
+  // Clear previous errors
+  [nameInput, phoneInput, addressInput].forEach(el => el.classList.remove('error-glow'));
+
+  // 1. SPECIFIC DATA VALIDATION
+  let hasError = false;
+
+  if (!name) {
+    nameInput.classList.add('error-glow');
+    showToast('⚠️ Full Name is required!');
+    hasError = true;
+  }
+
+  if (!phone) {
+    phoneInput.classList.add('error-glow');
+    showToast('⚠️ Phone Number is required!');
+    hasError = true;
+  }
+
+  if (!address || address.length < 10) {
+    addressInput.classList.add('error-glow');
+    showToast('⚠️ Please provide a detailed address!');
+    hasError = true;
+  }
+
+  // Detailed Phone Validation (Handles: 03338010986, +92 3338010986, +923338010986)
+  const cleanPhone = phone.replace(/\s+/g, ''); // Remove all spaces
+  const phonePattern = /^(\+92|0|92)\d{10}$/;
+
+  if (phone && !phonePattern.test(cleanPhone)) {
+    phoneInput.classList.add('error-glow');
+    if (/[a-zA-Z]/.test(phone)) {
+      showToast('❌ Error: Numbers only in phone field!');
+    } else {
+      showToast('❌ Error: Use Pakistani format (03xx or +92xxx)');
+    }
+    hasError = true;
+  }
+
+  if (hasError) return;
+
+  // 2. SENDING STATE
+  isSending = true;
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '🕒 Processing Order...';
+    btn.style.opacity = '0.7';
+  }
+
+  const itemsSummary = cart.map(item => `${item.name} x${item.quantity}`).join(', ');
+  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+  // GOOGLE FORM CONFIGURATION (CONNECTED TO "tot" Form)
+  const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeWwW7outU-KAMmg4kICIh6ngG70cpdOGixWdjP5iVB_us_Vw/formResponse";
+
+  const fields = {
+    "entry.1021392059": name,
+    "entry.2006224320": phone,
+    "entry.1872439208": phone,
+    "entry.1683790029": address,
+    "entry.97736043": itemsSummary,
+    "entry.1404360957": `Total: Rs. ${total}/-`
+  };
+
+  showToast('⏳ Sending order...');
+
+  const iframeId = 'hidden_iframe';
+  let iframe = document.getElementById(iframeId);
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id = iframeId;
+    iframe.name = iframeId;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+  }
+
+  const form = document.createElement('form');
+  form.action = FORM_URL;
+  form.method = 'POST';
+  form.target = iframeId;
+
+  for (const key in fields) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = fields[key];
+    form.appendChild(input);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+
+  // SUCCESS FEEDBACK
+  setTimeout(() => {
+    isSending = false;
+    showToast('🚀 ORDER PLACED SUCCESSFULLY!');
+    if (form.parentNode) document.body.removeChild(form);
+
+    // Reset button
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '🚀 Place Order (Confirm)';
+      btn.style.opacity = '1';
+    }
+
+    closeCheckoutModal();
+    toggleCart();
+    cart = [];
+    updateCart();
+    document.getElementById('orderForm').reset();
+  }, 1000);
 }
